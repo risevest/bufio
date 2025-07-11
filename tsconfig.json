@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2020",
     "declaration": true,
     "module": "commonjs",
     "lib": ["es2017", "esnext.asynciterable", "dom"],
     "sourceMap": true,
     "outDir": "./dist",
-    "rootDir": "./src",
     "strict": false,
     "noImplicitAny": false,
     "noUnusedLocals": true,
@@ -19,5 +18,5 @@
     "emitDecoratorMetadata": true
   },
   "exclude": ["src/**/*.spec.ts"],
-  "include": ["types/**/*.d.ts", "src/**/*"]
+  "include": ["types/**/*.d.ts", "src/**/*", "./**/*.ts"]
 }
