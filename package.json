@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
+    "watch": "tsc -w -p ./tsconfig.json",
     "test": "jest --runInBand --detectOpenHandles --forceExit",
     "lint": "prettier --write \"src/**/*.ts\""
   },
