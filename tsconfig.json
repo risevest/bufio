@@ -6,6 +6,7 @@
     "lib": ["es2017", "esnext.asynciterable", "dom"],
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "strict": false,
     "noImplicitAny": false,
     "noUnusedLocals": true,
