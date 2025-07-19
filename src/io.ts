@@ -1,11 +1,12 @@
-import { Storage } from "./storage/base";
-import { MemoryStorage } from "./storage/memory";
+import { MemoryStorage, Storage } from "./storage";
+
 import { Worker } from "./worker";
 
 export class BufIO<T, U> {
   private storage: Storage<T>;
   private worker: Worker<T, U>;
   private flushInterval: number;
+  private readonly batchSize = 1000;
   private intervalId?: NodeJS.Timeout;
   private onError?: (err: Error, records: T[]) => void;
 
@@ -34,7 +35,7 @@ export class BufIO<T, U> {
   }
 
   private async flush() {
-    const records = this.storage.get();
+    const records = this.storage.get(this.batchSize);
     if (!records.length) return;
 
     try {
