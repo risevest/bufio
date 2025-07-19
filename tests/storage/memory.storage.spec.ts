@@ -20,56 +20,66 @@ describe("MemoryStorage", () => {
     storage = new MemoryStorage<RecordType>();
   });
 
-  it("should store records using put()", () => {
-    const record = newRecord();
-    storage.put(record);
-
-    const result = storage.get();
-    expect(result).to.deep.equal([record]);
+  describe("constructor", () => {
+    it("should initialize with an empty buffer", () => {
+      expect(storage.get()).to.deep.equal([]);
+    });
   });
 
-  it("should return all records if fewer than batchSize are present", () => {
-    const records = multiply(2, newRecord);
-    records.forEach((r) => storage.put(r));
+  describe("put", () => {
+    it("should store records using put()", () => {
+      const record = newRecord();
+      storage.put(record);
 
-    const result = storage.get(5);
-    expect(result).to.deep.equal(records);
+      const result = storage.get();
+      expect(result).to.deep.equal([record]);
+    });
 
-    const second = storage.get();
-    expect(second).to.deep.equal([]);
+    it("should mutate internal buffer after get()", () => {
+      const rec1 = newRecord();
+      const rec2 = newRecord();
+      storage.put(rec1);
+      storage.put(rec2);
+
+      const first = storage.get(1);
+      expect(first).to.deep.equal([rec1]);
+
+      const second = storage.get();
+      expect(second).to.deep.equal([rec2]);
+
+      const third = storage.get();
+      expect(third).to.deep.equal([]);
+    });
   });
 
-  it("should return up to batchSize records", () => {
-    for (let i = 0; i < 10; i++) {
-      storage.put(newRecord({ id: i }));
-    }
+  describe("get", () => {
+    it("should return all records if fewer than batchSize are present", () => {
+      const records = multiply(2, newRecord);
+      records.forEach((r) => storage.put(r));
 
-    const batch = storage.get(4);
-    expect(batch.length).to.equal(4);
-    expect(batch.map((r) => r.id)).to.deep.equal([0, 1, 2, 3]);
+      const result = storage.get(5);
+      expect(result).to.deep.equal(records);
 
-    const remaining = storage.get();
-    expect(remaining.length).to.equal(6);
-  });
+      const second = storage.get();
+      expect(second).to.deep.equal([]);
+    });
 
-  it("should return an empty array if buffer is empty", () => {
-    expect(storage.get()).to.deep.equal([]);
-    expect(storage.get(10)).to.deep.equal([]);
-  });
+    it("should return up to batchSize records", () => {
+      for (let i = 0; i < 10; i++) {
+        storage.put(newRecord({ id: i }));
+      }
 
-  it("should mutate internal buffer after get()", () => {
-    const rec1 = newRecord();
-    const rec2 = newRecord();
-    storage.put(rec1);
-    storage.put(rec2);
+      const batch = storage.get(4);
+      expect(batch.length).to.equal(4);
+      expect(batch.map((r) => r.id)).to.deep.equal([0, 1, 2, 3]);
 
-    const first = storage.get(1);
-    expect(first).to.deep.equal([rec1]);
+      const remaining = storage.get();
+      expect(remaining.length).to.equal(6);
+    });
 
-    const second = storage.get();
-    expect(second).to.deep.equal([rec2]);
-
-    const third = storage.get();
-    expect(third).to.deep.equal([]);
+    it("should return an empty array if buffer is empty", () => {
+      expect(storage.get()).to.deep.equal([]);
+      expect(storage.get(10)).to.deep.equal([]);
+    });
   });
 });
