@@ -6,18 +6,20 @@ export class BufIO<T, U> {
   private storage: Storage<T>;
   private worker: Worker<T, U>;
   private flushInterval: number;
-  private readonly batchSize = 1000;
+  private batchSize?: number;
   private intervalId?: NodeJS.Timeout;
   private onError?: (err: Error, records: T[]) => void;
 
   constructor(config: {
-    storage?: Storage<T>;
     worker: Worker<T, U>;
+    storage?: Storage<T>;
+    batchSize?: number;
     flushInterval?: number;
     onError?: (err: Error, records: T[]) => void;
   }) {
     this.storage = config.storage ?? new MemoryStorage<T>();
     this.worker = config.worker;
+    this.batchSize = config.batchSize;
     this.flushInterval = config.flushInterval ?? 5000;
     this.onError = config.onError;
   }
