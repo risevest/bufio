@@ -113,5 +113,16 @@ describe("MemoryStorage", () => {
       const remaining = storage.get();
       expect(remaining).to.have.length(3);
     });
+
+        it("should handle negative batchSize", () => {
+      const records = multiply(3, newRecord);
+      records.forEach(r => storage.put(r));
+
+      const result = storage.get(-1);
+      expect(result).to.deep.equal([]);
+      
+      const remaining = storage.get();
+      expect(remaining).to.have.length(3);
+    });
   });
 });
