@@ -10,6 +10,7 @@ export class BufIO<T, U> {
   private intervalId?: NodeJS.Timeout;
   private onError?: (err: Error, records: T[]) => void;
 
+  
   constructor(config: {
     worker: Worker<T, U>;
     storage?: Storage<T>;

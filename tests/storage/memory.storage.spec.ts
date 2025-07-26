@@ -50,7 +50,27 @@ describe("MemoryStorage", () => {
       const third = storage.get();
       expect(third).to.deep.equal([]);
     });
+
+    it("should handle putting undefined/null values", () => {
+      storage.put(undefined as any);
+      storage.put(null as any);
+      
+      const result = storage.get();
+      expect(result).to.deep.equal([undefined, null]);
   });
+
+      it("should maintain insertion order", () => {
+      const records = Array.from({ length: 5 }, (_, i) => newRecord({ id: i }));
+      records.forEach(r => storage.put(r));
+
+      const result = storage.get();
+      expect(result.map(r => r.id)).to.deep.equal([0, 1, 2, 3, 4]);
+    });
+  });
+
+
+
+
 
   describe("get", () => {
     it("should return all records if fewer than batchSize are present", () => {
@@ -80,6 +100,29 @@ describe("MemoryStorage", () => {
     it("should return an empty array if buffer is empty", () => {
       expect(storage.get()).to.deep.equal([]);
       expect(storage.get(10)).to.deep.equal([]);
+    });
+
+        it("should handle batchSize of 0", () => {
+      const records = multiply(3, newRecord);
+      records.forEach(r => storage.put(r));
+
+      const result = storage.get(0);
+      expect(result).to.deep.equal([]);
+      
+
+      const remaining = storage.get();
+      expect(remaining).to.have.length(3);
+    });
+
+        it("should handle negative batchSize", () => {
+      const records = multiply(3, newRecord);
+      records.forEach(r => storage.put(r));
+
+      const result = storage.get(-1);
+      expect(result).to.deep.equal([]);
+      
+      const remaining = storage.get();
+      expect(remaining).to.have.length(3);
     });
   });
 });
