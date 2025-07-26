@@ -27,7 +27,7 @@
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
     "@types/faker": "^6.6.11",
-    "@types/jest": "^29.2.6",
+    "@types/jest": "^30.0.0",
     "@types/node": "^18.11.18",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
