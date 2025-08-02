@@ -7,8 +7,8 @@ type RecordType = { id: number; value: string };
 
 function newRecord(extra?: Partial<RecordType>): RecordType {
   return {
-    id: faker.number.int({ min: 1, max: 1000 }),
-    value: faker.string.alphanumeric(10),
+    id: faker.datatype.number({ min: 1, max: 1000 }),
+    value: faker.random.alphaNumeric(10),
     ...extra,
   };
 }
