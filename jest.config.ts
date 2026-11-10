@@ -3,9 +3,10 @@ module.exports = {
   verbose: false,
   roots: ["<rootDir>"],
   transform: {
-    "^.+\\.tsx?$": "ts-jest"
+    "^.+\\.tsx?$": "ts-jest",
   },
   testRegex: "/tests/.*\\.spec.ts",
   testPathIgnorePatterns: [],
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"]
+  collectCoverageFrom: ["src/**/*.ts"],
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
 };

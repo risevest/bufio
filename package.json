@@ -8,6 +8,7 @@
     "build": "tsc -p ./tsconfig.json",
     "watch": "tsc -w -p ./tsconfig.json",
     "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test:coverage": "jest --runInBand --coverage",
     "lint": "prettier --write \"src/**/*.ts\""
   },
   "license": "MIT",
