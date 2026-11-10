@@ -38,7 +38,7 @@ export function deferred<T>() {
  * object literal in every test.
  */
 export function createWorker<T, U = T>(
-  work: (records: T[]) => Promise<U[]>,
+  work: (records: T[]) => Promise<U[]>
 ): Worker<T, U> {
   return { work };
 }

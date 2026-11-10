@@ -166,12 +166,15 @@ describe("BufIO", () => {
       }
 
       await tick(1000);
+      expect(work.mock.calls.length).to.equal(1);
       expect(work.mock.calls[0][0]).to.deep.equal([record(1), record(2)]);
 
       await tick(1000);
+      expect(work.mock.calls.length).to.equal(2);
       expect(work.mock.calls[1][0]).to.deep.equal([record(3), record(4)]);
 
       await tick(1000);
+      expect(work.mock.calls.length).to.equal(3);
       expect(work.mock.calls[2][0]).to.deep.equal([record(5)]);
     });
 
